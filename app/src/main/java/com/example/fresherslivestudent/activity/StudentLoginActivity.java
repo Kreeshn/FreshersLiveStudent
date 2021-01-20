@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fresherslivestudent.R;
+import com.example.fresherslivestudent.apputil.SharedPrefManager;
 import com.example.fresherslivestudent.model.StudentLoginResponse;
 import com.example.fresherslivestudent.retrofitutil.RetrofitClient;
 
@@ -24,10 +25,12 @@ public class StudentLoginActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
     TextView tvNewUser;
    Button btnlogin;
+    SharedPrefManager sharedPrefManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_login);
+        sharedPrefManager = new SharedPrefManager(this);
         etEmail = (EditText) findViewById(R.id.etEmailLogin);
         etPassword = (EditText) findViewById(R.id.etPassLogin);
         btnlogin = (Button) findViewById(R.id.btnStdLogin);
@@ -58,6 +61,11 @@ public class StudentLoginActivity extends AppCompatActivity {
             public void onResponse(Call<StudentLoginResponse> call, Response<StudentLoginResponse> response) {
                 if(response.isSuccessful()){
                     if(response.body().getError().equals("200")){
+                        sharedPrefManager.updateStudentLoginStatus(true);
+                        sharedPrefManager.saveidofStudent(response.body().getSid());
+                        String fullname= response.body().getFname()+" "+response.body().getLname();
+                        sharedPrefManager.saveNameofStudent(fullname);
+                        sharedPrefManager.saveEmailofStudent(response.body().getEmail());
                         Intent intent = new Intent(StudentLoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         Toast.makeText(StudentLoginActivity.this,response.body().getMessage(), Toast.LENGTH_SHORT).show();
@@ -76,5 +84,13 @@ public class StudentLoginActivity extends AppCompatActivity {
                 Toast.makeText(StudentLoginActivity.this,t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    protected void onStart() {
+        super.onStart();
+        if(sharedPrefManager.isStudentLogin()){
+            Intent intent = new Intent(StudentLoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
