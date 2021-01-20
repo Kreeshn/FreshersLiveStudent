@@ -14,4 +14,15 @@ public interface Api {
             @Field("email") String email,
             @Field("password") String password
     );
+    @FormUrlEncoded
+    @POST("studentReg.php")
+    Call<StudentLoginResponse> studentReg(
+            @Field("fname") String fname,
+            @Field("lname") String lname,
+            @Field("dob") String dob,
+            @Field("gender") String gender,
+            @Field("contact") String contact,
+            @Field("email") String email,
+            @Field("password") String password
+    );
 }

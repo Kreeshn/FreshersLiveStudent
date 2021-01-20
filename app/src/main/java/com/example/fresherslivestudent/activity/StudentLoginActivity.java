@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fresherslivestudent.R;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 
 public class StudentLoginActivity extends AppCompatActivity {
     EditText etEmail, etPassword;
+    TextView tvNewUser;
    Button btnlogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +35,13 @@ public class StudentLoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 performStdLogin();
+            }
+        });
+        tvNewUser = (TextView) findViewById(R.id.textNewUser);
+        tvNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(StudentLoginActivity.this,StudentRegistrationActivity.class));
             }
         });
     }

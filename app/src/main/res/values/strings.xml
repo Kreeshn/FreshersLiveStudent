@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Freshers Live Student</string>
+
+    <!-- SharedPreference -->
+    <string name="pref_file_key">pref_file_key</string>
+    <string name="pref_is_comp_login">isComplogin</string>
+    <string name="pref_id_of_comp">idofcomp</string>
+    <string name="pref_name_of_comp">nameofcomp</string>
+    <string name="pref_email_of_comp">emailofcomp</string>
+    <string name="open_navigation_drawer">Open Navigation Drawer</string>
+    <string name="close_navigation_drawer">Close Navigation Drawer</string>
 </resources>
